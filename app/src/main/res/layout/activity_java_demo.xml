@@ -74,10 +74,16 @@
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
                 android:background="#48494A">
+                <dev1503.oreui.widgets.OreAlert
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Marketplace Pass 是一项按月订阅优质精选内容的服务。每个月都会添加新体验！"
+                    android:id="@+id/alertYellow"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
+                    android:layout_marginTop="8dp"
                     android:text="世界名称"/>
                 <dev1503.oreui.widgets.OreEditText
                     android:layout_width="match_parent"

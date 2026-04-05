@@ -54,6 +54,7 @@ class OreTabs @JvmOverloads constructor(
         button.layoutParams = params
 
         button.setOnClickListener {
+            if (!isEnabled) return@setOnClickListener
             val index = indexOfChild(button)
             if (index != -1) {
                 activeIndex = index
@@ -90,14 +91,22 @@ class OreTabs @JvmOverloads constructor(
         _activeIndex = -1
     }
 
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        updateButtonsState()
+    }
+
     private fun updateButtonsState() {
         val count = childCount
         if (count == 0) return
 
+        val parentEnabled = isEnabled
         val p = (getChildAt(0) as? OreButton)?.styleSheet?.pixelSize ?: 5f
 
         for (i in 0 until count) {
             val child = getChildAt(i) as? OreButton ?: continue
+
+            child.isEnabled = parentEnabled
 
             if (i == _activeIndex) {
                 child.addFlag(StyleSheet.FLAG_ACTIVE)

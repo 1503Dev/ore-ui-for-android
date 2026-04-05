@@ -29,6 +29,16 @@ class StyleSheet {
         const val FLAG_FOCUSED = 1 shl 4
 
         @JvmField
+        val STYLE_DISABLED = StyleSheet().apply {
+            outlineColor = 0xFF58585A.toInt()
+            backgroundColor = 0xFFB1B2B5.toInt()
+            shadowColor = 0xFF8C8D90.toInt()
+            borderTopColor = 0xFFB1B2B5.toInt()
+            borderBottomColor = 0xFFB1B2B5.toInt()
+            textColor = 0xFF58585A.toInt()
+        }
+
+        @JvmField
         val STYLE_INACTIVATED = StyleSheet().apply {
             outlineColor = 0xFF1E1E1F.toInt()
             borderTopColor = 0xFFA3A4A6.toInt()
@@ -44,7 +54,6 @@ class StyleSheet {
             shadowColor = 0xFF242425.toInt()
             textColor = 0xFFFFFFFF.toInt()
             caretColor = 0xFF548840.toInt()
-            textSize = 16.0f
         }
 
         @JvmField
@@ -158,12 +167,14 @@ class StyleSheet {
         val STYLE_ALERT_YELLOW = StyleSheet().apply {
             backgroundColor = 0xFFEFE866.toInt()
             textColor = 0xFF000000.toInt()
+            textSize = 6.25f
         }
 
         @JvmField
         val STYLE_ALERT_BLUE = StyleSheet().apply {
             backgroundColor = 0xFF2E6BE5.toInt()
             textColor = 0xFFFFFFFF.toInt()
+            textSize = 6.25f
         }
     }
 
@@ -177,15 +188,16 @@ class StyleSheet {
     var shadowColor: Int? = null
     var caretColor: Int? = null
 
-    var textSize: Float? = null
+    var textSize: Float? = 7.5f
 
     var styleHovered: StyleSheet? = null
     var stylePressed: StyleSheet? = null
     var styleActive: StyleSheet? = null
     var styleDisabled: StyleSheet? = null
 
-    private var lastFlags: Int = -1
-    private var cachedStyle: StyleSheet? = null
+    init {
+        styleDisabled = STYLE_DISABLED
+    }
 
     fun apply(other: StyleSheet): StyleSheet {
         val result = StyleSheet()
@@ -215,7 +227,6 @@ class StyleSheet {
                 val active = styleActive ?: stylePressed
                 active?.let { result = result.apply(it) }
             }
-
             if ((flags and FLAG_PRESSED) != 0) stylePressed?.let { result = result.apply(it) }
         }
 
@@ -239,4 +250,7 @@ class StyleSheet {
         result.styleActive = styleActive?.clone()
         return result
     }
+
+    private var lastFlags: Int = -1
+    private var cachedStyle: StyleSheet? = null
 }

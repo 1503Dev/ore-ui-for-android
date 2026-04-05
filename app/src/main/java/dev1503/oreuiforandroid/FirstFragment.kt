@@ -70,6 +70,14 @@ class FirstFragment : Fragment() {
         binding.btnRed.styleSheet = StyleSheet.STYLE_RED
         binding.btnDarkGray.styleSheet = StyleSheet.STYLE_DARK_GRAY
 
+        binding.btnWhiteDisabled.isEnabled = false
+        binding.btnRedDisabled.styleSheet = StyleSheet.STYLE_RED
+        binding.btnRedDisabled.isEnabled = false
+        binding.btnPurpleDisabled.styleSheet = StyleSheet.STYLE_PURPLE
+        binding.btnPurpleDisabled.isEnabled = false
+        binding.btnGreenDisabled.styleSheet = StyleSheet.STYLE_GREEN
+        binding.btnGreenDisabled.isEnabled = false
+
         binding.alertBlue.styleSheet = StyleSheet.STYLE_ALERT_BLUE
         binding.alertCustom.apply {
             val v = LinearLayout(context)
@@ -96,6 +104,10 @@ class FirstFragment : Fragment() {
             thumbStyleSheet = style
         }
         binding.switch4.setThumbIcon(Pixels2D.PIXELS_SWITCH_RIGHT)
+        binding.switch5.apply {
+            setThumbIcon(Pixels2D.PIXELS_SWITCH_LEFT)
+            isEnabled = false
+        }
 
         binding.slider1.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -130,6 +142,7 @@ class FirstFragment : Fragment() {
             trackLeftStyleSheet = StyleSheet.STYLE_PURPLE
             trackRightStyleSheet = StyleSheet.STYLE_RED
         }
+        binding.slider3.isEnabled = false
 
         binding.tabs1.apply {
             addButton(OreButton(context).apply {
@@ -169,6 +182,20 @@ class FirstFragment : Fragment() {
                 text = "创造"
             })
         }
+        binding.tabs3.apply {
+            addButton(OreButton(context).apply {
+                styleSheet = StyleSheet.STYLE_WHITE
+                text = "普通"
+            })
+            addButton(OreButton(context).apply {
+                styleSheet = StyleSheet.STYLE_WHITE
+                text = "终为白日"
+            })
+            isEnabled = false
+        }
+
+
+        binding.editText3.isEnabled = false
 
         binding.btnJavaDemo.setOnClickListener {
             startActivity(Intent(context, JavaDemoActivity::class.java))

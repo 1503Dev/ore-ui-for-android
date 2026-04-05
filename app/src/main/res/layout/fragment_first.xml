@@ -26,7 +26,6 @@
             android:id="@+id/btnGithub"/>
 
         <LinearLayout
-            android:id="@+id/button_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -50,6 +49,32 @@
                 android:layout_height="wrap_content"
                 android:text="红色 Red"
                 android:id="@+id/btnRed"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <dev1503.oreui.widgets.OreButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="白色 White"
+                android:id="@+id/btnWhiteDisabled"/>
+            <dev1503.oreui.widgets.OreButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="紫色 Purple"
+                android:id="@+id/btnPurpleDisabled"/>
+            <dev1503.oreui.widgets.OreButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="绿色 Green"
+                android:id="@+id/btnGreenDisabled"/>
+            <dev1503.oreui.widgets.OreButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="红色 Red"
+                android:id="@+id/btnRedDisabled"/>
         </LinearLayout>
         <dev1503.oreui.widgets.OreButton
             android:layout_width="match_parent"
@@ -96,6 +121,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/switch4"/>
+            <dev1503.oreui.widgets.OreSwitch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch5"/>
         </LinearLayout>
         <dev1503.oreui.widgets.OreSlider
             android:layout_width="match_parent"
@@ -107,6 +136,12 @@
             android:max="10"
             android:progress="5"
             android:id="@+id/slider2"/>
+        <dev1503.oreui.widgets.OreSlider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="5"
+            android:id="@+id/slider3"/>
         <dev1503.oreui.widgets.OreEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,6 +152,12 @@
             android:layout_height="wrap_content"
             android:text="AaBbCbDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789中国制造，惠及全球"
             android:id="@+id/editText2"/>
+        <dev1503.oreui.widgets.OreEditText
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="字不能从这一侧写下"
+            android:id="@+id/editText3"/>
         <dev1503.oreui.widgets.OreTabs
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,5 +166,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tabs2"/>
+        <dev1503.oreui.widgets.OreTabs
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabs3"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

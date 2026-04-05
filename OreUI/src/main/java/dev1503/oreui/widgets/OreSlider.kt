@@ -97,6 +97,7 @@ class OreSlider @JvmOverloads constructor(
     }
 
     override fun onHoverEvent(event: MotionEvent): Boolean {
+        if (!isEnabled) return false
         val action = event.action
         if (action == MotionEvent.ACTION_HOVER_ENTER || action == MotionEvent.ACTION_HOVER_EXIT) {
             isHovered = (action == MotionEvent.ACTION_HOVER_ENTER)
@@ -109,6 +110,7 @@ class OreSlider @JvmOverloads constructor(
         val p = P
         val w = width.toFloat()
         val h = height.toFloat()
+        val isDisabled = !isEnabled
         val thumbSize = THUMB_H_P * p
         val trackH = TRACK_H_P * p
 
@@ -118,7 +120,9 @@ class OreSlider @JvmOverloads constructor(
         val trackTop = trackCenterY - trackH / 2f
         val trackBottom = trackTop + trackH
 
-        val sL = trackLeftStyleSheet.getStyleSheet(StyleSheet.FLAG_DEFAULT)
+        val trackFlags = if (isDisabled) StyleSheet.FLAG_DISABLED else StyleSheet.FLAG_DEFAULT
+
+        val sL = trackLeftStyleSheet.getStyleSheet(trackFlags)
         paint.color = sL.outlineColor ?: 0xFF1E1E1F.toInt()
         canvas.drawRect(0f, trackTop, thumbCenterX, trackBottom, paint)
         paint.color = sL.borderBottomColor ?: 0
@@ -128,7 +132,7 @@ class OreSlider @JvmOverloads constructor(
         paint.color = sL.backgroundColor ?: 0
         canvas.drawRect(p * 2, trackTop + p * 2, thumbCenterX, trackBottom - p * 2, paint)
 
-        val sR = trackRightStyleSheet.getStyleSheet(StyleSheet.FLAG_DEFAULT)
+        val sR = trackRightStyleSheet.getStyleSheet(trackFlags)
         paint.color = sR.outlineColor ?: 0xFF1E1E1F.toInt()
         canvas.drawRect(thumbCenterX, trackTop, w, trackBottom, paint)
         paint.color = sR.borderBottomColor ?: 0
@@ -143,7 +147,8 @@ class OreSlider @JvmOverloads constructor(
         val tT = trackCenterY - thumbSize / 2f
         val tB = tT + thumbSize
 
-        val st = thumbStyleSheet.getStyleSheet(if (isHovered) StyleSheet.FLAG_HOVERED else StyleSheet.FLAG_DEFAULT)
+        val thumbFlags = if (isDisabled) StyleSheet.FLAG_DISABLED else (if (isHovered) StyleSheet.FLAG_HOVERED else StyleSheet.FLAG_DEFAULT)
+        val st = thumbStyleSheet.getStyleSheet(thumbFlags)
 
         paint.color = st.outlineColor ?: 0xFF1E1E1F.toInt()
         canvas.drawRect(tL, tT, tR, tB, paint)

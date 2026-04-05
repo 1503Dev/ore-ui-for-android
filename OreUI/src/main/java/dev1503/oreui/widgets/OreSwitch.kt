@@ -63,6 +63,7 @@ class OreSwitch @JvmOverloads constructor(
     }
 
     override fun onHoverEvent(event: MotionEvent): Boolean {
+        if (!isEnabled) return false
         when (event.action) {
             MotionEvent.ACTION_HOVER_ENTER -> {
                 isHovered = true
@@ -91,13 +92,17 @@ class OreSwitch @JvmOverloads constructor(
         val w = width.toFloat()
         val h = height.toFloat()
 
+        val isDisabled = !isEnabled
         val thumbSize = h
         val progress = if (ANIMATION_ENABLED) thumbPosition else (if (isChecked) 1f else 0f)
         val thumbLeft = progress * (w - thumbSize)
         val thumbRight = thumbLeft + thumbSize
 
-        val sL = trackLeftStyleSheet.getStyleSheet(StyleSheet.FLAG_DEFAULT)
-        val sR = trackRightStyleSheet.getStyleSheet(StyleSheet.FLAG_DEFAULT)
+        val trackLeftFlags = if (isDisabled) StyleSheet.FLAG_DISABLED else StyleSheet.FLAG_DEFAULT
+        val trackRightFlags = if (isDisabled) StyleSheet.FLAG_DISABLED else StyleSheet.FLAG_DEFAULT
+
+        val sL = trackLeftStyleSheet.getStyleSheet(trackLeftFlags)
+        val sR = trackRightStyleSheet.getStyleSheet(trackRightFlags)
 
         paint.color = sL.outlineColor ?: 0xFF1E1E1F.toInt()
         canvas.drawRect(0f, TRACK_TOP_GAP, w, h, paint)
@@ -132,8 +137,8 @@ class OreSwitch @JvmOverloads constructor(
         val rightIconY = centerY - (rightIcon.height * p) / 2f
         drawPixels(canvas, rightIcon, rightIconX, rightIconY, p)
 
-        val flag = if (isHovered) StyleSheet.FLAG_HOVERED else StyleSheet.FLAG_DEFAULT
-        val st = thumbStyleSheet.getStyleSheet(flag)
+        val thumbFlags = if (isDisabled) StyleSheet.FLAG_DISABLED else (if (isHovered) StyleSheet.FLAG_HOVERED else StyleSheet.FLAG_DEFAULT)
+        val st = thumbStyleSheet.getStyleSheet(thumbFlags)
 
         paint.color = st.outlineColor ?: 0xFF1E1E1F.toInt()
         canvas.drawRect(thumbLeft, 0f, thumbRight, h, paint)
