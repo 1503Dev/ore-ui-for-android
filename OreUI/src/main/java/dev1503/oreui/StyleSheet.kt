@@ -176,6 +176,20 @@ class StyleSheet {
             textColor = 0xFFFFFFFF.toInt()
             textSize = 6.25f
         }
+
+        @JvmField
+        val STYLE_PANEL = StyleSheet().apply {
+            outlineColor = 0xFF1E1E1F.toInt()
+            backgroundColor = 0xFF48494A.toInt()
+            borderTopColor = 0xFF6D6D6E.toInt()
+            borderBottomColor = 0xFF5A5B5C.toInt()
+            textColor = 0xFFFFFFFF.toInt()
+        }
+
+        @JvmField
+        val STYLE_DIALOG = STYLE_PANEL.clone().apply {
+            backgroundColor = 0xFF313233.toInt()
+        }
     }
 
     var pixelSize = 5f
@@ -233,6 +247,10 @@ class StyleSheet {
         lastFlags = flags
         cachedStyle = result
         return result
+    }
+
+    fun calcPixelSize(float: Float = 1f): Float {
+        return float * pixelSize
     }
 
     fun clearCache() {

@@ -1,6 +1,7 @@
 package dev1503.oreuiforandroid
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -20,6 +21,7 @@ import dev1503.oreui.widgets.OreButton
 import dev1503.oreui.widgets.OreTabs
 import dev1503.oreuiforandroid.databinding.FragmentFirstBinding
 import androidx.core.net.toUri
+import dev1503.oreui.dialog.OreDialogBuilder
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -204,6 +206,27 @@ class FirstFragment : Fragment() {
         binding.btnGithub.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW,
                 "https://github.com/1503Dev/ore-ui-for-android".toUri()))
+        }
+
+        binding.panel2.borderEnabled = true
+        binding.panel3.borderEnabled = true
+        binding.panel3.outlineEnabled = false
+
+        binding.btnDialog.setOnClickListener {
+            context?.let { it1 ->
+                OreDialogBuilder(it1)
+                    .setTitle("你无法获得成就")
+                    .setMessage("""若使用以下功能创建世界，这将意味着你无法在该世界中获得成就。
+即使你之后关闭此选项，你也需要访问其他世界才能获得成就。
+
+在以下情况中，将无法在这个世界获得成就：
+
+  ·  世界是以创造模式创建""")
+                    .setPositiveButton("关闭", DialogInterface.OnClickListener { dialog, _ ->
+                        dialog?.dismiss()
+                    })
+                    .show()
+            }
         }
     }
 

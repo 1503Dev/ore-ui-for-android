@@ -1,5 +1,6 @@
 package dev1503.oreui.widgets
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -11,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import dev1503.oreui.StyleSheet
 
+@SuppressLint("ResourceType")
 class OreAlert @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
