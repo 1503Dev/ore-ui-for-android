@@ -98,8 +98,6 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
                 style.textSize?.let { setTextSize(TypedValue.COMPLEX_UNIT_PX, style.calcPixelSize(it * 0.832f)) }
                 style.textColor?.let { setTextColor(it) }
                 setPadding(style.calcPixelSize(7.5f).toInt(), style.calcPixelSize(7.5f).toInt(), style.calcPixelSize(7.5f).toInt(), style.calcPixelSize(7.5f).toInt())
-//                layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-//                gravity = Gravity.CENTER
                 container.addView(this)
             }
         }
@@ -173,7 +171,9 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
             window.setBackgroundDrawableResource(android.R.color.transparent)
             window.decorView.setPadding(0, 0, 0, 0)
             if (ANIMATION_DISABLED) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
                 window.setWindowAnimations(0)
+                window.attributes.windowAnimations = 0
                 window.setDimAmount(0.5f)
             }
             val lp = window.attributes

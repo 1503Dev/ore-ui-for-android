@@ -177,6 +177,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:text="Panel"/>
         </dev1503.oreui.widgets.OrePanel>
         <dev1503.oreui.widgets.OrePanel
@@ -186,6 +187,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:text="Panel with border"/>
         </dev1503.oreui.widgets.OrePanel>
         <dev1503.oreui.widgets.OrePanel
@@ -195,6 +197,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
                 android:text="Panel with border no outline"/>
         </dev1503.oreui.widgets.OrePanel>
         <dev1503.oreui.widgets.OreButton
@@ -202,5 +205,24 @@
             android:layout_height="wrap_content"
             android:text="对话框"
             android:id="@+id/btnDialog"/>
+        <dev1503.oreui.widgets.OreButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="对话框2"
+            android:id="@+id/btnDialog2"/>
+        <dev1503.oreui.widgets.OreCard
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/card1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="Card"/>
+        </dev1503.oreui.widgets.OreCard>
+        <dev1503.oreui.widgets.OreAccordion
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/accordion1"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

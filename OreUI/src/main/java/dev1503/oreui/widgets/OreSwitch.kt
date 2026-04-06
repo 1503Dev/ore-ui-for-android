@@ -9,7 +9,7 @@ import androidx.appcompat.widget.SwitchCompat
 import dev1503.oreui.StyleSheet
 import dev1503.oreui.Pixels2D
 
-class OreSwitch @JvmOverloads constructor(
+open class OreSwitch @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.appcompat.R.attr.switchStyle

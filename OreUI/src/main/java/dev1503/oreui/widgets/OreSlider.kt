@@ -10,7 +10,7 @@ import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.widget.AppCompatSeekBar
 import dev1503.oreui.StyleSheet
 
-class OreSlider @JvmOverloads constructor(
+open class OreSlider @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.appcompat.R.attr.seekBarStyle

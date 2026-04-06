@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import dev1503.oreui.Pixels2D
 import dev1503.oreui.StyleSheet
 import dev1503.oreui.widgets.OreButton
@@ -22,6 +24,8 @@ import dev1503.oreui.widgets.OreTabs
 import dev1503.oreuiforandroid.databinding.FragmentFirstBinding
 import androidx.core.net.toUri
 import dev1503.oreui.dialog.OreDialogBuilder
+import dev1503.oreui.events.OnHoverListener
+import dev1503.oreui.widgets.OreAlert
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -226,6 +230,93 @@ class FirstFragment : Fragment() {
                         dialog?.dismiss()
                     })
                     .show()
+            }
+        }
+
+        binding.btnDialog2.setOnClickListener {
+            context?.let { it1 ->
+                val builder = OreDialogBuilder(it1)
+                    .setTitle("对话框2")
+                    .setMessage("""若使用以下功能创建世界，这将意味着你无法在该世界中获得成就。
+即使你之后关闭此选项，你也需要访问其他世界才能获得成就。
+
+在以下情况中，将无法在这个世界获得成就：
+
+  ·  已在创造模式创建世界
+  ·  这个世界是以平坦世界的设置创建
+  ·  已启用作弊
+  ·  世界创建者拥有操作员特权
+  ·  测试版功能已启用
+  ·  世界创建者使用的是《我的世界》试用版
+  ·  行为包已激活
+  ·  世界由模板建造而来
+  
+创建世界后，您无法关闭实验性游戏内容。
+
+实验性游戏内容随时可能破坏游戏，所以不要建造任何重要的东西，因为您可能会失去它。
+
+如果你删除这个世界，它将会永远消失。
+
+警告：此操作会将你的服务器地址暴露给当前正在观看你屏幕的任何人（包括通过流媒体观看者）。若你的服务器地址与IP地址相同，泄露该信息则可能使你面临网络攻击的风险。
+
+确定要显示你的服务器地址吗？
+
+如果删除此服务器，稍后仍然可以再次添加它。
+
+是否要退出《我的世界》？
+
+正在购买
+
+稍后即可完成。
+
+管理自己的Minecraft服务器！哪些玩家可以加入、游戏要怎么玩，都由您来定。即使您不在线，成员也可以免费游玩。轻松设置、管理，并且可在任何设备上游玩。
+
+访问优质的精选内容
+
+  ·  Realms Plus 包含 Marketplace Pass
+  ·  内容每月更新
+  ·  追加内容、世界等等
+  ·  角色编辑器物品
+  ·  独家优惠""")
+                    .setPositiveButton("取消并返回") { dialog, _ ->
+                        dialog?.dismiss()
+                    }
+                    .setNeutralButton("依然打开实验性游戏内容") { dialog, _ ->
+                        dialog?.dismiss()
+                    }
+                    .setNegativeButton("删除世界") { dialog, _ ->
+                        dialog?.dismiss()
+                    }
+                builder.positiveButton?.styleSheet = StyleSheet.STYLE_GREEN
+                builder.negativeButton?.styleSheet = StyleSheet.STYLE_RED
+                builder.show()
+            }
+        }
+
+//        binding.card1.styleSheet = StyleSheet.STYLE_CARD_DARK
+        binding.card1.setOnClickListener {
+            Toast.makeText(context, "点击了卡片1", Toast.LENGTH_SHORT).show()
+        }
+        binding.card1.addOnHoverListener(object : OnHoverListener {
+            override fun onHover(view: android.view.View, event: android.view.MotionEvent) {
+                Log.d("FirstFragment", "卡片Hover: $event")
+            }
+        })
+
+        binding.accordion1.apply {
+            title = "Marketplace Pass"
+            subtitle = "(100+)"
+            contentView = LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT)
+                addView(TextView(context).apply {
+                    setTextColor(Color.WHITE)
+                    text = "Accordion"
+                })
+                addView(OreAlert(context).apply {
+                    text = "12345\n67890"
+                })
             }
         }
     }

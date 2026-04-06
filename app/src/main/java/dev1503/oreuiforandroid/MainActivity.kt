@@ -1,7 +1,6 @@
 package dev1503.oreuiforandroid
 
-import android.annotation.SuppressLint
-import android.content.DialogInterface
+import android.graphics.Typeface
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        StyleSheet.defaultTypeface = Typeface.MONOSPACE
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
                 .setAnchorView(R.id.fab).show()
         }
 
-        // 在 Activity 或 Fragment 的 onCreate 中
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val builder = OreDialogBuilder(this@MainActivity)
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                         dialog?.dismiss()
                         isEnabled = false
                         onBackPressedDispatcher.onBackPressed()
+                        finish()
                     }
 
                 builder.negativeButton?.styleSheet = StyleSheet.STYLE_RED
@@ -80,22 +81,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
-    }
-
-    @SuppressLint("GestureBackNavigation")
-    override fun onBackPressed() {
-//        val builder = OreDialogBuilder(this)
-//            .setTitle("退出“创造新世界“？")
-//            .setMessage("如果你退出，你的世界设置将不会保存。")
-//            .setPositiveButton("继续创建") { dialog, _ ->
-//                dialog?.dismiss()
-//            }
-//            .setNegativeButton("退出而不保存") { dialog, _ ->
-//                dialog?.dismiss()
-//                finish()
-//            }
-//        builder.negativeButton?.styleSheet = StyleSheet.STYLE_RED
-//        builder.show()
-        super.onBackPressed()
     }
 }

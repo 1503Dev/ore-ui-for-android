@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import dev1503.oreui.StyleSheet
 
-class OreTabs @JvmOverloads constructor(
+open class OreTabs @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

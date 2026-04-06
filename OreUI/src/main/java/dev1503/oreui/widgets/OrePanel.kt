@@ -7,16 +7,13 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import dev1503.oreui.StyleSheet
 
-class OrePanel @JvmOverloads constructor(
+open class OrePanel @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    private val paint = Paint().apply { isAntiAlias = false }
-
-    private val P: Float
-        get() = styleSheet.pixelSize
+    protected val paint = Paint().apply { isAntiAlias = false }
 
     var styleSheet: StyleSheet = StyleSheet.STYLE_PANEL
         set(value) {
@@ -49,8 +46,12 @@ class OrePanel @JvmOverloads constructor(
         updatePadding()
     }
 
+    protected open fun getCurrentFlags(): Int {
+        return if (isEnabled) StyleSheet.FLAG_DEFAULT else StyleSheet.FLAG_DISABLED
+    }
+
     private fun updatePadding() {
-        val p = P
+        val p = styleSheet.pixelSize
         val horizontalPadding = (p * 9).toInt()
         val verticalPadding = (p * 7.5).toInt()
         setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
@@ -62,12 +63,11 @@ class OrePanel @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
-        val p = P
+        val p = styleSheet.pixelSize
         val w = width.toFloat()
         val h = height.toFloat()
 
-        val flag = if (isEnabled) StyleSheet.FLAG_DEFAULT else StyleSheet.FLAG_DISABLED
-        val s = styleSheet.getStyleSheet(flag)
+        val s = styleSheet.getStyleSheet(getCurrentFlags())
 
         val startPos = if (outlineEnabled) {
             paint.color = s.outlineColor ?: 0xFF101419.toInt()

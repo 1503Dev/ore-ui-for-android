@@ -1,8 +1,10 @@
 package dev1503.oreui.widgets
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.MotionEvent
@@ -10,8 +12,10 @@ import androidx.appcompat.widget.AppCompatButton
 import dev1503.oreui.StyleSheet
 import androidx.core.graphics.withTranslation
 import dev1503.oreui.events.OnUnhoverListener
+import androidx.core.content.withStyledAttributes
 
-class OreButton @JvmOverloads constructor(
+@SuppressLint("ResourceType")
+open class OreButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.appcompat.R.attr.buttonStyle
@@ -23,6 +27,7 @@ class OreButton @JvmOverloads constructor(
     private var SIDE_PADDING: Float = 0f
     private var currentFlags = StyleSheet.FLAG_DEFAULT
     private var manualTextSize = -1f
+    private var manualTypeface: Typeface? = null
 
     private var onHoverListeners: MutableList<dev1503.oreui.events.OnHoverListener>? = null
     private var onUnhoverListeners: MutableList<OnUnhoverListener>? = null
@@ -42,11 +47,17 @@ class OreButton @JvmOverloads constructor(
         minHeight = 0
         gravity = android.view.Gravity.CENTER
 
-        val a = context.obtainStyledAttributes(attrs, intArrayOf(android.R.attr.textSize))
-        if (a.hasValue(0)) {
-            manualTextSize = a.getDimension(0, -1f)
+        context.withStyledAttributes(
+            attrs,
+            intArrayOf(android.R.attr.textSize, android.R.attr.fontFamily, android.R.attr.typeface)
+        ) {
+            if (hasValue(0)) {
+                manualTextSize = getDimension(0, -1f)
+            }
+            if (hasValue(1) || hasValue(2)) {
+                manualTypeface = typeface
+            }
         }
-        a.recycle()
 
         updatePixelConstants()
         updateState()
@@ -57,6 +68,11 @@ class OreButton @JvmOverloads constructor(
         if (unit != -100) {
             manualTextSize = TypedValue.applyDimension(unit, size, resources.displayMetrics)
         }
+    }
+
+    override fun setTypeface(tf: Typeface?) {
+        super.setTypeface(tf)
+        manualTypeface = tf
     }
 
     private fun updatePixelConstants() {
@@ -90,6 +106,11 @@ class OreButton @JvmOverloads constructor(
         if (manualTextSize == -1f) {
             val fontSize = (s.textSize ?: 8f) * P
             super.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize)
+        }
+
+        val targetTypeface = s.typeface ?: manualTypeface
+        if (super.getTypeface() != targetTypeface) {
+            super.setTypeface(targetTypeface)
         }
 
         setTextColor(s.textColor ?: 0xFFFFFFFF.toInt())

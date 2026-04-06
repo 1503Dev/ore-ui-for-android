@@ -1,15 +1,19 @@
 package dev1503.oreui.widgets
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import androidx.appcompat.widget.AppCompatEditText
 import dev1503.oreui.StyleSheet
+import androidx.core.content.withStyledAttributes
 
-class OreEditText @JvmOverloads constructor(
+@SuppressLint("ResourceType")
+open class OreEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = androidx.appcompat.R.attr.editTextStyle
@@ -17,6 +21,7 @@ class OreEditText @JvmOverloads constructor(
 
     private val paint = Paint().apply { isAntiAlias = false }
     private var manualTextSize = -1f
+    private var manualTypeface: Typeface? = null
 
     private val P: Float
         get() = styleSheet.pixelSize
@@ -35,11 +40,17 @@ class OreEditText @JvmOverloads constructor(
         setLineSpacing(0f, 1f)
         includeFontPadding = false
 
-        val a = context.obtainStyledAttributes(attrs, intArrayOf(android.R.attr.textSize))
-        if (a.hasValue(0)) {
-            manualTextSize = a.getDimension(0, -1f)
+        context.withStyledAttributes(
+            attrs,
+            intArrayOf(android.R.attr.textSize, android.R.attr.fontFamily, android.R.attr.typeface)
+        ) {
+            if (hasValue(0)) {
+                manualTextSize = getDimension(0, -1f)
+            }
+            if (hasValue(1) || hasValue(2)) {
+                manualTypeface = typeface
+            }
         }
-        a.recycle()
 
         updateSettings()
     }
@@ -50,6 +61,11 @@ class OreEditText @JvmOverloads constructor(
             manualTextSize = TypedValue.applyDimension(unit, size, resources.displayMetrics)
             updateSettings()
         }
+    }
+
+    override fun setTypeface(tf: Typeface?) {
+        super.setTypeface(tf)
+        manualTypeface = tf
     }
 
     override fun setEnabled(enabled: Boolean) {
@@ -67,6 +83,11 @@ class OreEditText @JvmOverloads constructor(
         if (manualTextSize == -1f) {
             val fontSize = (st.textSize ?: 3.2f) * p
             super.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize)
+        }
+
+        val targetTypeface = st.typeface ?: manualTypeface
+        if (super.getTypeface() != targetTypeface) {
+            super.setTypeface(targetTypeface)
         }
 
         val shadowHeight = p * 3

@@ -33,8 +33,10 @@ public class JavaDemoActivity extends AppCompatActivity {
         controller.hide(WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars());
         controller.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
 
-        ((OreButton) findViewById(R.id.btnCreate)).setStyleSheet(StyleSheet.STYLE_GREEN);
-        ((OreButton) findViewById(R.id.btnCreateRealms)).setStyleSheet(StyleSheet.STYLE_PURPLE);
+        OreButton btnCreate = findViewById(R.id.btnCreate);
+        btnCreate.setStyleSheet(StyleSheet.STYLE_GREEN);
+        OreButton btnCreateRealms = findViewById(R.id.btnCreateRealms);
+        btnCreateRealms.setStyleSheet(StyleSheet.STYLE_PURPLE);
 
         Pixels2D pixels2D = Pixels2D.fromText("001101100\n" +
                 "011111110\n" +
@@ -74,5 +76,14 @@ public class JavaDemoActivity extends AppCompatActivity {
         OreButton btnHard = new OreButton(this);
         btnHard.setText("困难");
         tabsDifficulty.addButton(btnHard);
+
+        switchHC.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            tabsGm.setEnabled(!isChecked);
+            tabsDifficulty.setEnabled(!isChecked);
+            if (isChecked) {
+                tabsGm.setActiveIndex(0);
+                tabsDifficulty.setActiveIndex(3);
+            }
+        });
     }
 }

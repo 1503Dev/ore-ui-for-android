@@ -1,24 +1,11 @@
 package dev1503.oreui
 
+import android.graphics.Typeface
+
 class StyleSheet {
     companion object {
         init {
-            println(
-                """
-          /$$$$$$                      /$$   /$$ /$$$$$$
-         /$${'$'}__  $$                    | $$  | $$|_  $${'$'}_/
-        | $$  \ $$  /$$$$$$   /$$$$$$ | $$  | $$  | $$  
-        | $$  | $$ /$${'$'}__  $$ /$${'$'}__  $$| $$  | $$  | $$  
-        | $$  | $$| $$  \__/| $$$$$$$$| $$  | $$  | $$  
-        | $$  | $$| $$      | $${'$'}_____/| $$  | $$  | $$  
-        |  $$$$$$/| $$      |  $$$$$$$|  $$$$$$/ /$$$$$$
-         \______/ |__/       \_______/ \______/ |______/
-         
-        -----------  MCBE OreUI for Android  -----------
-         https://github.com/1503Dev/ore-ui-for-android/
-        -------------  Apache License 2.0  -------------
-
-""")
+            OreUI.init()
         }
 
         const val FLAG_DEFAULT = 0
@@ -184,12 +171,47 @@ class StyleSheet {
             borderTopColor = 0xFF6D6D6E.toInt()
             borderBottomColor = 0xFF5A5B5C.toInt()
             textColor = 0xFFFFFFFF.toInt()
+
+            styleHovered = StyleSheet().apply {
+                backgroundColor = 0xFF58585A.toInt()
+                borderTopColor = 0xFF68686A.toInt()
+                borderBottomColor = 0xFF3E3E3F.toInt()
+            }
+
+            stylePressed = StyleSheet().apply {
+                backgroundColor = 0xFF313233.toInt()
+                borderTopColor = 0xFF454647.toInt()
+                borderBottomColor = 0xFF1D1E1F.toInt()
+            }
         }
 
         @JvmField
         val STYLE_DIALOG = STYLE_PANEL.clone().apply {
             backgroundColor = 0xFF313233.toInt()
         }
+
+        @JvmField
+        val STYLE_CARD_DARK = StyleSheet().apply {
+            outlineColor = 0xFF1E1E1F.toInt()
+            backgroundColor = 0xFF313233.toInt()
+            borderTopColor = 0xFF454647.toInt()
+            borderBottomColor = 0xFF1D1E1F.toInt()
+            textColor = 0xFFFFFFFF.toInt()
+
+            styleHovered = StyleSheet().apply {
+                backgroundColor = 0xFF48494A.toInt()
+                borderTopColor = 0xFF6D6D6E.toInt()
+                borderBottomColor = 0xFF5A5B5C.toInt()
+            }
+
+            stylePressed = StyleSheet().apply {
+                backgroundColor = 0xFF242425.toInt()
+                borderTopColor = 0xFF070707.toInt()
+                borderBottomColor = 0xFF39393A.toInt()
+            }
+        }
+
+        var defaultTypeface: Typeface? = null
     }
 
     var pixelSize = 5f
@@ -203,6 +225,14 @@ class StyleSheet {
     var caretColor: Int? = null
 
     var textSize: Float? = 7.5f
+
+    var typeface: Typeface? = null
+        get() {
+            return defaultTypeface
+        }
+        set(value) {
+            field = value
+        }
 
     var styleHovered: StyleSheet? = null
     var stylePressed: StyleSheet? = null
@@ -223,6 +253,8 @@ class StyleSheet {
         result.shadowColor = other.shadowColor ?: this.shadowColor
         result.caretColor = other.caretColor ?: this.caretColor
         result.textSize = other.textSize ?: this.textSize
+        result.typeface = other.typeface ?: this.typeface
+        result.pixelSize = other.pixelSize ?: this.pixelSize
         return result
     }
 
@@ -261,7 +293,6 @@ class StyleSheet {
     fun clone(): StyleSheet {
         var result = StyleSheet()
         result = result.apply(this)
-        result.pixelSize = pixelSize
         result.styleDisabled = styleDisabled?.clone()
         result.styleHovered = styleHovered?.clone()
         result.stylePressed = stylePressed?.clone()
