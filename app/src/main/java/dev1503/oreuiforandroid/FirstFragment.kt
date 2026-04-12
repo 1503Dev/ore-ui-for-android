@@ -73,6 +73,11 @@ class FirstFragment : Fragment() {
 //            })
         }
         binding.btnCreateWorlds.styleSheet = StyleSheet.STYLE_GREEN
+        binding.btnCreateWorlds.setIconPixels2D(Pixels2D.PIXELS_SWITCH_RIGHT)
+        binding.btnIcon.setIconPixels2D(Pixels2D.PIXELS_SWITCH_RIGHT)
+        binding.btnIcon2.setIconPixels2D(Pixels2D.PIXELS_SWITCH_LEFT)
+        binding.btnIcon3.setIconPixels2D(Pixels2D.PIXELS_SHORT_ARROW_DOWN)
+        binding.btnIcon4.setIconPixels2D(Pixels2D.PIXELS_SHORT_ARROW_UP)
         binding.btnRed.styleSheet = StyleSheet.STYLE_RED
         binding.btnDarkGray.styleSheet = StyleSheet.STYLE_DARK_GRAY
 
@@ -318,6 +323,15 @@ class FirstFragment : Fragment() {
                     text = "12345\n67890"
                 })
             }
+        }
+
+        binding.pixelsIcon1.apply {
+            pixelSize = StyleSheet.defaultPixelSize
+            pixels2d = Pixels2D.PIXELS_SWITCH_RIGHT
+        }
+        binding.pixelsIcon2.apply {
+            pixelSize = StyleSheet.defaultPixelSize
+            pixels2d = Pixels2D.PIXELS_SWITCH_LEFT
         }
     }
 

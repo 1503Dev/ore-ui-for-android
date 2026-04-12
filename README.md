@@ -31,16 +31,15 @@
 > [!IMPORTANT]
 > 项目运行需要导入 **AppCompat** 库，否则将导致无法运行。
 
+### 前置配置
+建议在 View 渲染之前初始化显示基准以通过 dp 计算代替 px，达到最佳效果。
+```kotlin
+OreUI.initDisplayBaseline(context)
+```
+
 ### 示例代码
 * [Kotlin 示例](./app/src/main/java/dev1503/oreuiforandroid/FirstFragment.kt)
 * [Java 示例](./app/src/main/java/dev1503/oreuiforandroid/JavaDemoActivity.java)
-
----
-
-## 🎨 画廊
-> `v0.2.0.2.202604061424-beta`
-
-![capture-1](./.static/capture-1.gif)
 
 ---
 
@@ -56,3 +55,9 @@
 * `1503Dev/ore-ui-for-android` **并非** Minecraft 官方作品。
 * `1503Dev` 与 Mojang Studios 和 Microsoft **无从属关系**。
 * 设计和样式最终解释权属于 **Mojang Studios** 和 **Microsoft**。
+---
+
+## 🎨 画廊
+> `v0.3.0.3.202604121153-beta`
+
+![capture-1](./.static/capture-1.gif)

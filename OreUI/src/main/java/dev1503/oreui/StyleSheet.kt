@@ -1,6 +1,7 @@
 package dev1503.oreui
 
 import android.graphics.Typeface
+import android.util.Log
 
 class StyleSheet {
     companion object {
@@ -211,10 +212,25 @@ class StyleSheet {
             }
         }
 
+        @JvmField
+        val STYLE_TEXT_VIEW = StyleSheet().apply {
+            textColor = 0xFFFFFFFF.toInt()
+        }
+
+        var defaultPixelSize: Float = 5f
         var defaultTypeface: Typeface? = null
+        var defaultTextSize: Float = 7.5f
     }
 
-    var pixelSize = 5f
+    var pixelSize: Float = 0f
+        get() {
+            if (field <= 0f && defaultPixelSize > 0f) return defaultPixelSize
+            if (field <= 0) return 1f
+            return field
+        }
+        set(value) {
+            field = value
+        }
 
     var outlineColor: Int? = null
     var borderTopColor: Int? = null
@@ -224,11 +240,19 @@ class StyleSheet {
     var shadowColor: Int? = null
     var caretColor: Int? = null
 
-    var textSize: Float? = 7.5f
+    var textSize: Float? = null
+        get() {
+            if (field != null) return field
+            else return defaultTextSize
+        }
+        set(value) {
+            field = value
+        }
 
     var typeface: Typeface? = null
         get() {
-            return defaultTypeface
+            if (field != null) return field
+            else return defaultTypeface
         }
         set(value) {
             field = value
@@ -254,7 +278,6 @@ class StyleSheet {
         result.caretColor = other.caretColor ?: this.caretColor
         result.textSize = other.textSize ?: this.textSize
         result.typeface = other.typeface ?: this.typeface
-        result.pixelSize = other.pixelSize ?: this.pixelSize
         return result
     }
 
@@ -281,8 +304,14 @@ class StyleSheet {
         return result
     }
 
+    @JvmOverloads
     fun calcPixelSize(float: Float = 1f): Float {
         return float * pixelSize
+    }
+
+    @JvmOverloads
+    fun calcTextSize(multi: Float = 1f): Float {
+        return (textSize ?: defaultTextSize) * pixelSize * multi
     }
 
     fun clearCache() {

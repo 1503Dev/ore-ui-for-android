@@ -6,8 +6,8 @@ def RELEASE = 0
 def BETA = 1
 def SNAPSHOT = 2
 
-def _versionCode = 2
-def _versionName = "0.2.0"
+def _versionCode = 3
+def _versionName = "0.3.0"
 def _variant = BETA
 
 android {

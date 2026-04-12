@@ -13,6 +13,7 @@ import dev1503.oreui.StyleSheet
 import androidx.core.graphics.withTranslation
 import dev1503.oreui.events.OnUnhoverListener
 import androidx.core.content.withStyledAttributes
+import dev1503.oreui.Pixels2D
 
 @SuppressLint("ResourceType")
 open class OreButton @JvmOverloads constructor(
@@ -31,6 +32,14 @@ open class OreButton @JvmOverloads constructor(
 
     private var onHoverListeners: MutableList<dev1503.oreui.events.OnHoverListener>? = null
     private var onUnhoverListeners: MutableList<OnUnhoverListener>? = null
+
+    var pixels2d: Pixels2D? = null
+        set(value) {
+            field = value
+            updatePadding()
+            requestLayout()
+            invalidate()
+        }
 
     var styleSheet: StyleSheet = StyleSheet.STYLE_WHITE
         set(value) {
@@ -80,7 +89,22 @@ open class OreButton @JvmOverloads constructor(
         P = ps
         PRESS_OFFSET = ps * 2
         SIDE_PADDING = ps * 4
-        setPadding(SIDE_PADDING.toInt(), 0, SIDE_PADDING.toInt(), 0)
+        updatePadding()
+    }
+
+    private fun updatePadding() {
+        if (text.isEmpty() && pixels2d != null && pixels2d!!.width == pixels2d!!.height) {
+            setPadding(0, 0, 0, 0)
+        } else {
+            val iconSpace = if (pixels2d != null && text.isNotEmpty()) {
+                (pixels2d!!.width * P) + (4 * P)
+            } else 0f
+            setPadding((SIDE_PADDING + iconSpace).toInt(), 0, SIDE_PADDING.toInt(), 0)
+        }
+    }
+
+    fun setIconPixels2D(pixels: Pixels2D?) {
+        this.pixels2d = pixels
     }
 
     fun addFlag(flag: Int) {
@@ -104,7 +128,7 @@ open class OreButton @JvmOverloads constructor(
         val s = styleSheet.getStyleSheet(tempFlags)
 
         if (manualTextSize == -1f) {
-            val fontSize = (s.textSize ?: 8f) * P
+            val fontSize = s.calcTextSize()
             super.setTextSize(TypedValue.COMPLEX_UNIT_PX, fontSize)
         }
 
@@ -125,16 +149,39 @@ open class OreButton @JvmOverloads constructor(
         updateState()
     }
 
+    override fun onTextChanged(text: CharSequence?, start: Int, lengthBefore: Int, lengthAfter: Int) {
+        super.onTextChanged(text, start, lengthBefore, lengthAfter)
+        updatePadding()
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val ps = styleSheet.pixelSize
         val defaultHeight = (ps * 24).toInt()
+
         val hSpec = when (MeasureSpec.getMode(heightMeasureSpec)) {
             MeasureSpec.EXACTLY -> heightMeasureSpec
             MeasureSpec.AT_MOST -> MeasureSpec.makeMeasureSpec(minOf(defaultHeight, MeasureSpec.getSize(heightMeasureSpec)), MeasureSpec.EXACTLY)
             else -> MeasureSpec.makeMeasureSpec(defaultHeight, MeasureSpec.EXACTLY)
         }
+
         super.onMeasure(widthMeasureSpec, hSpec)
-        setMeasuredDimension(resolveSize(measuredWidth, widthMeasureSpec), measuredHeight)
+
+        var targetWidth = measuredWidth
+        val targetHeight = measuredHeight
+
+        val p2d = pixels2d
+        if (text.isEmpty() && p2d != null) {
+            if (p2d.width == p2d.height) {
+                targetWidth = targetHeight
+            } else {
+                val iconW = p2d.width * P
+                val iconH = p2d.height * P
+                val verticalMargin = (targetHeight - iconH) / 2f
+                targetWidth = (iconW + verticalMargin * 2).toInt()
+            }
+        }
+
+        setMeasuredDimension(resolveSize(targetWidth, widthMeasureSpec), targetHeight)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -191,6 +238,7 @@ open class OreButton @JvmOverloads constructor(
         val s = styleSheet.getStyleSheet(colorFlags)
 
         val isPressedLook = ((currentFlags and StyleSheet.FLAG_PRESSED) != 0 || isActive)
+        val drawOffset = if (isPressedLook) PRESS_OFFSET else 0f
 
         if (isPressedLook) {
             val off = PRESS_OFFSET
@@ -211,7 +259,6 @@ open class OreButton @JvmOverloads constructor(
                 paint.color = s.textColor ?: 0xFFFFFFFF.toInt()
                 canvas.drawRect(barX, barY, barX + barW, barY + barH, paint)
             }
-            canvas.withTranslation(0f, off / 2f) { super.onDraw(this) }
         } else {
             paint.color = s.outlineColor ?: 0xFF101419.toInt()
             canvas.drawRect(0f, 0f, w, h, paint)
@@ -223,6 +270,40 @@ open class OreButton @JvmOverloads constructor(
             canvas.drawRect(P, P, w - P * 2, h - P * 4, paint)
             paint.color = s.backgroundColor ?: 0
             canvas.drawRect(P * 2, P * 2, w - P * 2, h - P * 4, paint)
+        }
+
+        pixels2d?.let { p2d ->
+            paint.color = s.textColor ?: 0xFFFFFFFF.toInt()
+            val iconW = p2d.width * P
+            val iconH = p2d.height * P
+            val spacing = 4 * P
+
+            val iconX: Float
+            val iconY = (h - iconH) / 2f
+
+            if (text.isNotEmpty()) {
+                val textPaint = getPaint()
+                val textWidth = textPaint.measureText(text.toString())
+                val totalContentWidth = iconW + spacing + textWidth
+                iconX = (w - totalContentWidth) / 2f
+            } else {
+                iconX = (w - iconW) / 2f
+            }
+
+            val visualY = iconY + if (isPressedLook) drawOffset / 2f else -P
+
+            canvas.withTranslation(iconX, visualY) {
+                p2d.pixels.forEach { pixel ->
+                    val px = (pixel shr 32).toFloat() * P
+                    val py = (pixel and 0xFFFFFFFFL).toFloat() * P
+                    drawRect(px, py, px + P, py + P, paint)
+                }
+            }
+        }
+
+        if (isPressedLook) {
+            canvas.withTranslation(0f, drawOffset / 2f) { super.onDraw(this) }
+        } else {
             canvas.withTranslation(0f, -P) { super.onDraw(this) }
         }
     }

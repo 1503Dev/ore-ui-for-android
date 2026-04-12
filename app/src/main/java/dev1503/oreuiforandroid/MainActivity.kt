@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import dev1503.oreui.OreUI
 import dev1503.oreui.StyleSheet
 import dev1503.oreui.dialog.OreDialogBuilder
 import dev1503.oreuiforandroid.databinding.ActivityMainBinding
@@ -22,8 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        StyleSheet.defaultTypeface = Typeface.MONOSPACE
+        OreUI.initDisplayBaseline(this)
+        StyleSheet.defaultTypeface = Typeface.MONOSPACE
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

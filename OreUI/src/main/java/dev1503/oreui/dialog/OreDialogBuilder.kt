@@ -15,15 +15,16 @@ import androidx.appcompat.app.AlertDialog
 import dev1503.oreui.StyleSheet
 import dev1503.oreui.widgets.OreButton
 import dev1503.oreui.widgets.OrePanel
+import dev1503.oreui.widgets.OreTextView
 
 class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 
     private var userView: View? = null
     val rootLayout: OrePanel
     private var headerPanel: OrePanel? = null
-    private var headerPanelTextView: TextView? = null
+    private var headerPanelTextView: OreTextView? = null
     private var containerScrollView: ScrollView? = null
-    private var messageTextView: TextView? = null
+    private var messageTextView: OreTextView? = null
     private var footerPanel: OrePanel? = null
     var positiveButton: OreButton? = null
     var negativeButton: OreButton? = null
@@ -72,9 +73,7 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
                 rootLayout.addView(this, 0)
             }
 
-            headerPanelTextView = TextView(context).apply {
-                style.textSize?.let { setTextSize(TypedValue.COMPLEX_UNIT_PX, style.calcPixelSize(it)) }
-                style.textColor?.let { setTextColor(it) }
+            headerPanelTextView = OreTextView(context).apply {
                 headerPanel?.addView(this)
             }
         }
@@ -88,16 +87,15 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
                 layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f)
                 rootLayout.addView(this)
             }
-            val style = rootLayout.styleSheet
             val container = LinearLayout(context).apply {
                 layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 gravity = Gravity.CENTER
             }
             containerScrollView?.addView(container)
-            messageTextView = TextView(context).apply {
-                style.textSize?.let { setTextSize(TypedValue.COMPLEX_UNIT_PX, style.calcPixelSize(it * 0.832f)) }
-                style.textColor?.let { setTextColor(it) }
-                setPadding(style.calcPixelSize(7.5f).toInt(), style.calcPixelSize(7.5f).toInt(), style.calcPixelSize(7.5f).toInt(), style.calcPixelSize(7.5f).toInt())
+            messageTextView = OreTextView(context).apply {
+                val padding = styleSheet.calcPixelSize(7.5f).toInt()
+                setPadding(padding, padding, padding, padding)
+                setTextSize(TypedValue.COMPLEX_UNIT_PX, styleSheet.calcTextSize(0.85f))
                 container.addView(this)
             }
         }

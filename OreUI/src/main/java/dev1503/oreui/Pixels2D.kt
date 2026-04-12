@@ -24,6 +24,20 @@ class Pixels2D {
             100001
             011110
         """.trimIndent(), '1')
+        @JvmField
+        val PIXELS_SHORT_ARROW_DOWN = Pixels2D.fromText("""
+            1000001
+            0100010
+            0010100
+            0001000
+        """.trimIndent(), '1')
+        @JvmField
+        val PIXELS_SHORT_ARROW_UP = Pixels2D.fromText("""
+            0001000
+            0010100
+            0100010
+            1000001
+        """.trimIndent(), '1')
 
         @JvmStatic
         fun fromText(text: String, foregroundSymbol: Char): Pixels2D {
