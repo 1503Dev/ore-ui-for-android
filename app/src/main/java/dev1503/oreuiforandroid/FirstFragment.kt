@@ -23,6 +23,7 @@ import dev1503.oreui.widgets.OreButton
 import dev1503.oreui.widgets.OreTabs
 import dev1503.oreuiforandroid.databinding.FragmentFirstBinding
 import androidx.core.net.toUri
+import androidx.core.view.setPadding
 import dev1503.oreui.dialog.OreDialogBuilder
 import dev1503.oreui.events.OnHoverListener
 import dev1503.oreui.widgets.OreAlert
@@ -333,6 +334,13 @@ class FirstFragment : Fragment() {
             pixelSize = StyleSheet.defaultPixelSize
             pixels2d = Pixels2D.PIXELS_SWITCH_LEFT
         }
+
+        binding.btnIcon5.setIconPixels2D(Pixels2D.fromText("""
+            1
+        """.trimIndent(), '1'))
+
+        binding.headerlabelpanel.setPadding(32)
+        binding.headerlabelpanel.borderEnabled = true
     }
 
     override fun onDestroyView() {

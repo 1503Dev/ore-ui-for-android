@@ -101,6 +101,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnIcon4"/>
+            <dev1503.oreui.widgets.OreButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnIcon5"/>
         </LinearLayout>
         <dev1503.oreui.widgets.OreButton
             android:layout_width="match_parent"
@@ -260,5 +264,18 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/pixelsIcon2"/>
         </LinearLayout>
+        <dev1503.oreui.widgets.HeaderLabel
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="什么是 Realms?"/>
+        <dev1503.oreui.widgets.OrePanel
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/headerlabelpanel">
+            <dev1503.oreui.widgets.OreTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="永不下线的多人游戏世界"/>
+        </dev1503.oreui.widgets.OrePanel>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
