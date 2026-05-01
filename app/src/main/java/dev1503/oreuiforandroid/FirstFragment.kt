@@ -297,8 +297,27 @@ class FirstFragment : Fragment() {
                 builder.negativeButton?.styleSheet = StyleSheet.STYLE_RED
                 builder.show()
             }
+
         }
 
+        binding.btnDialog3.setOnClickListener {
+            context?.let { it1 ->
+                OreDialogBuilder(it1)
+                    .setTitle("神奇宠物追加内容")
+                    .setMessage("《Minecraft》YouTube内容创作者Tubbo创造了宠物，再加上《宝宝当家》游戏发布，我们简直要被可爱淹没了。20个可收集的伙伴、100多项技能和140种变体等你去探索，你的周末计划现在还包括与某件可爱的事物建立情感联系。快来认识新的最好朋友吧！")
+                    .setNegativeButton("取消") { dialog, _ ->
+                        dialog?.dismiss()
+                    }
+                    .setPositiveButton("立即购买") { dialog, _ ->
+                        dialog?.dismiss()
+                    }
+                    .setButtonOrientation(LinearLayout.HORIZONTAL)
+                    .apply {
+                        positiveButton?.styleSheet = StyleSheet.STYLE_GREEN
+                    }
+                    .show()
+            }
+        }
 //        binding.card1.styleSheet = StyleSheet.STYLE_CARD_DARK
         binding.card1.setOnClickListener {
             Toast.makeText(context, "点击了卡片1", Toast.LENGTH_SHORT).show()

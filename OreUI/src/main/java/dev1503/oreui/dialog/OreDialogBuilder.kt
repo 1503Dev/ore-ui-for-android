@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ScrollView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import dev1503.oreui.StyleSheet
 import dev1503.oreui.widgets.OreButton
@@ -31,6 +30,8 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
     var neutralButton: OreButton? = null
     private var dialog: AlertDialog? = null
 
+    private var buttonOrientation = LinearLayout.VERTICAL
+
     companion object {
         const val ANIMATION_DISABLED = true
     }
@@ -43,6 +44,13 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
             setPadding(p, p, p, p)
         }
         super.setView(rootLayout)
+    }
+
+    fun setButtonOrientation(orientation: Int): OreDialogBuilder {
+        this.buttonOrientation = orientation
+        footerPanel?.orientation = orientation
+        refreshFooterButtons()
+        return this
     }
 
     override fun setView(view: View?): OreDialogBuilder {
@@ -64,7 +72,6 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
 
     override fun setTitle(title: CharSequence?): OreDialogBuilder {
         if (headerPanel == null) {
-            val style = rootLayout.styleSheet
             headerPanel = OrePanel(context).apply {
                 outlineEnabled = false
                 borderEnabled = true
@@ -112,10 +119,14 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
                 borderEnabled = true
                 sideBorderEnabled = false
                 layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                orientation = LinearLayout.VERTICAL
+                orientation = buttonOrientation
                 gravity = Gravity.CENTER
                 dividerDrawable = GradientDrawable().apply {
-                    setSize(0, spacing)
+                    if (buttonOrientation == LinearLayout.VERTICAL) {
+                        setSize(0, spacing)
+                    } else {
+                        setSize(spacing, 0)
+                    }
                 }
                 showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE
                 rootLayout.addView(this)
@@ -124,9 +135,20 @@ class OreDialogBuilder(context: Context) : AlertDialog.Builder(context) {
     }
 
     private fun refreshFooterButtons() {
-        footerPanel?.let { panel ->
-            panel.removeAllViews()
-            val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val panel = footerPanel ?: return
+        panel.removeAllViews()
+
+        val lp = if (buttonOrientation == LinearLayout.HORIZONTAL) {
+            LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        } else {
+            LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
+
+        if (buttonOrientation == LinearLayout.HORIZONTAL) {
+            negativeButton?.let { it.layoutParams = lp; panel.addView(it) }
+            neutralButton?.let { it.layoutParams = lp; panel.addView(it) }
+            positiveButton?.let { it.layoutParams = lp; panel.addView(it) }
+        } else {
             positiveButton?.let { it.layoutParams = lp; panel.addView(it) }
             neutralButton?.let { it.layoutParams = lp; panel.addView(it) }
             negativeButton?.let { it.layoutParams = lp; panel.addView(it) }

@@ -235,6 +235,11 @@
             android:layout_height="wrap_content"
             android:text="对话框2"
             android:id="@+id/btnDialog2"/>
+        <dev1503.oreui.widgets.OreButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="对话框水平按钮"
+            android:id="@+id/btnDialog3"/>
         <dev1503.oreui.widgets.OreCard
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
