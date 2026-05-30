@@ -7,7 +7,7 @@ class Pixels2D {
 
     companion object {
         @JvmField
-        val PIXELS_SWITCH_LEFT = Pixels2D.fromText("""
+        val PIXELS_SWITCH_LEFT = fromText("""
             1
             1
             1
@@ -16,7 +16,7 @@ class Pixels2D {
             1
         """.trimIndent(), '1')
         @JvmField
-        val PIXELS_SWITCH_RIGHT = Pixels2D.fromText("""
+        val PIXELS_SWITCH_RIGHT = fromText("""
             011110
             100001
             100001
@@ -25,19 +25,113 @@ class Pixels2D {
             011110
         """.trimIndent(), '1')
         @JvmField
-        val PIXELS_SHORT_ARROW_DOWN = Pixels2D.fromText("""
+        val PIXELS_SHORT_ARROW_DOWN = fromText("""
             1000001
             0100010
             0010100
             0001000
         """.trimIndent(), '1')
         @JvmField
-        val PIXELS_SHORT_ARROW_UP = Pixels2D.fromText("""
+        val PIXELS_SHORT_ARROW_UP = fromText("""
             0001000
             0010100
             0100010
             1000001
         """.trimIndent(), '1')
+
+        @JvmField
+        val PIXELS_CIRCULAR_PROGRESSES = listOf(
+            fromText("""
+                0011100
+                0100010
+                1000001
+                1000001
+                0000000
+                0000000
+                0000000
+            """.trimIndent(), '1'),
+            fromText("""
+                0011100
+                0100010
+                0000001
+                0000001
+                0000001
+                0000010
+                0000000
+            """.trimIndent(), '1'),
+            fromText("""
+                0001100
+                0000010
+                0000001
+                0000001
+                0000001
+                0000010
+                0001100
+            """.trimIndent(), '1'),
+            fromText("""
+                0000100
+                0000010
+                0000001
+                0000001
+                0000001
+                0000010
+                0011100
+            """.trimIndent(), '1'),
+            fromText("""
+                0000000
+                0000000
+                0000001
+                0000001
+                1000001
+                0100010
+                0011100
+            """.trimIndent(), '1'),
+            fromText("""
+                0000000
+                0000000
+                0000000
+                1000001
+                1000001
+                0100010
+                0011100
+            """.trimIndent(), '1'),
+            fromText("""
+                0000000
+                0100000
+                1000000
+                1000000
+                1000000
+                0100010
+                0011100
+            """.trimIndent(), '1'),
+            fromText("""
+                0010000
+                0100000
+                1000000
+                1000000
+                1000000
+                0100000
+                0011100
+            """.trimIndent(), '1'),
+            fromText("""
+                0011000
+                0100000
+                1000000
+                1000000
+                1000000
+                0100000
+                0011000
+            """.trimIndent(), '1'),
+            fromText("""
+                0011100
+                0100010
+                1000000
+                1000000
+                1000000
+                0100000
+                0000000
+            """.trimIndent(), '1')
+        )
 
         @JvmStatic
         fun fromText(text: String, foregroundSymbol: Char): Pixels2D {

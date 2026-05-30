@@ -217,6 +217,13 @@ class StyleSheet {
             textColor = 0xFFFFFFFF.toInt()
         }
 
+        @JvmField
+        val STYLE_PROGRESS_BAR_WHITE = StyleSheet().apply {
+            borderTopColor = 0xFFFFFFFF.toInt()
+            borderBottomColor = 0xFFFFFFFF.toInt()
+            textColor = 0xFFFFFFFF.toInt()
+        }
+
         var defaultPixelSize: Float = 5f
         var defaultTypeface: Typeface? = null
         var defaultTextSize: Float = 7.5f
