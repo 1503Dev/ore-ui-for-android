@@ -5,7 +5,7 @@ plugins {
 android {
     namespace 'dev1503.oreui'
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }

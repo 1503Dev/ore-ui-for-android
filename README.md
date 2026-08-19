@@ -26,6 +26,19 @@
 你可以通过以下链接获取 Demo 和编译好的库文件：
 👉 **[Releases](https://github.com/1503Dev/ore-ui-for-android/releases)**
 
+或者是通过 Maven 仓库拉取：  
+build.gradle.kts: 
+```kotlin
+repositories {
+    maven {
+        url = uri("https://maven.1503dev.top/")
+    }
+}
+dependencies {
+    implementation("dev1503.oreui:oreuiforandroid:0.4.0")
+}
+```
+
 ### 导入说明
 由于项目不依赖外部资源，你可以根据需求选择导入 `jar` 或 `aar`。
 > [!IMPORTANT]

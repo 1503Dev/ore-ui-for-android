@@ -18,13 +18,13 @@ class OreUI {
         |  $$$$$$/| $$      |  $$$$$$$|  $$$$$$/ /$$$$$$
          \______/ |__/       \_______/ \______/ |______/
          
-        --------  MCBE OreUI for Android v0.3.0 --------
+        --------  MCBE OreUI for Android v0.4.0 --------
          https://github.com/1503Dev/ore-ui-for-android/
         -------------  Apache License 2.0  -------------
 
 """)
         }
-        const val VERSION_CODE = 3
+        const val VERSION_CODE = 4
 
         fun init(){}
 
