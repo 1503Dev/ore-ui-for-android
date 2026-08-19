@@ -6,8 +6,8 @@ def RELEASE = 0
 def BETA = 1
 def SNAPSHOT = 2
 
-def _versionCode = 3
-def _versionName = "0.3.0"
+def _versionCode = 4
+def _versionName = "0.4.0"
 def _variant = BETA
 
 android {
@@ -22,7 +22,7 @@ android {
     }
 
     namespace 'dev1503.oreuiforandroid'
-    compileSdk 36
+    compileSdk 37
 
     defaultConfig {
         def buildTime = new Date().format('yyyyMMddHHmm')
@@ -31,7 +31,7 @@ android {
 
         applicationId "dev1503.oreuiforandroid"
         minSdk 23
-        targetSdk 36
+        targetSdk 37
         versionCode _versionCode
         versionName "${_versionName}.${_versionCode}.${buildTime}-${variantSuffix}"
 

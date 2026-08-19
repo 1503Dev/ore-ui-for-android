@@ -167,6 +167,25 @@
             android:max="10"
             android:progress="5"
             android:id="@+id/slider3"/>
+        <dev1503.oreui.widgets.OreProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:id="@+id/progressBar1"/>
+        <dev1503.oreui.widgets.OreProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:id="@+id/progressBar2"/>
+        <dev1503.oreui.widgets.OreProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:id="@+id/progressBar3"/>
+        <dev1503.oreui.widgets.OreSlider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sliderProgressBar"/>
         <dev1503.oreui.widgets.OreEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

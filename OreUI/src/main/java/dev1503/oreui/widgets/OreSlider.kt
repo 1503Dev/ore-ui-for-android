@@ -78,18 +78,18 @@ open class OreSlider @JvmOverloads constructor(
         if (availableWidth <= 0) return super.onTouchEvent(event)
 
         val touchRatio = ((event.x - thumbSize / 2f) / availableWidth).coerceIn(0f, 1f)
-        val targetValue = touchRatio * max
+        val targetValue = Math.round(touchRatio * max).toInt()
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                startAnimation(targetValue)
-                progress = targetValue.toInt()
+                startAnimation(targetValue.toFloat())
+                progress = targetValue
                 parent?.requestDisallowInterceptTouchEvent(true)
             }
             MotionEvent.ACTION_MOVE -> {
                 offsetAnimator?.cancel()
-                visualProgress = targetValue
-                progress = targetValue.toInt()
+                visualProgress = targetValue.toFloat()
+                progress = targetValue
                 invalidate()
             }
         }

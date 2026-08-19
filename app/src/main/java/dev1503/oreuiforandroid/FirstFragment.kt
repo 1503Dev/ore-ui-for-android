@@ -27,6 +27,7 @@ import androidx.core.view.setPadding
 import dev1503.oreui.dialog.OreDialogBuilder
 import dev1503.oreui.events.OnHoverListener
 import dev1503.oreui.widgets.OreAlert
+import dev1503.oreui.widgets.OreProgressBar
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -343,6 +344,33 @@ class FirstFragment : Fragment() {
                     text = "12345\n67890"
                 })
             }
+        }
+
+        binding.progressBar1.apply {
+            max = 100
+            progress = 60
+        }
+        binding.progressBar2.apply {
+            val style = StyleSheet.STYLE_GREEN
+            styleSheet = style
+            max = 100
+            progress = 30
+        }
+        binding.progressBar3.apply {
+            max = 100
+            progress = 80
+            isEnabled = false
+        }
+        binding.sliderProgressBar.apply {
+            max = 100
+            progress = 60
+            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    binding.progressBar1.progress = progress
+                }
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            })
         }
 
         binding.pixelsIcon1.apply {
